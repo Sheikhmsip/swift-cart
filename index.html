@@ -150,6 +150,33 @@
         </div>
     </section>
 
+
+    <!-- Trending Section products dynamicaly -->
+
+    <section>
+        <div class="md:w-10/12 max-w-7xl mx-auto py-12 px-6">
+            <h2 class="text-3xl font-bold mb-8">Trending Now</h2>
+            <div id="product-container" class="grid md:grid-cols-3 gap-6">
+            </div>
+        </div>
+
+        <!-- Details Modal -->
+        <dialog id="product_modal" class="modal">
+            <div class="modal-box max-w-lg">
+                <div id="details-container"></div>
+
+                <div class="modal-action">
+                    <form method="dialog">
+                        <button class="btn">Close</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
+    </section>
+
+
+    <!-- js file link -->
+    <script src="./script/index.js"></script>
 </body>
 
 </html>
