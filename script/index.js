@@ -1,19 +1,20 @@
-// load all products
+
+// gloval variables to store products and categories
 let allProducts = [];
 let trendingProducts = [];
+let categories = [];
+
+// load all products
 const loadProducts = () => {
   fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
     .then((data) => {
       allProducts = data;
-
       // load only 3 products
       trendingProducts = data.slice(0, 3);
-
       // loadProductsPage(products);
       // console.log(products);
       // console.log(trendingproducts)
-
       displayTrendingProducts(trendingProducts);
     });
 };
@@ -27,11 +28,26 @@ const loadProductDetails = (id) => {
     });
 };
 
+// load categories
+const loadCategories = () => {
+  fetch("https://fakestoreapi.com/products/categories")
+    .then(res => res.json())
+    .then(data => {
+      categories = data;
+      displayCategories(categories);
+    });
+};
+
+
+
 //  dynamically page navigation
 const navigate = (page) => {
+  activeNav(page);
   if (page === "home") homePage();
   if (page === "products") productsPage();
 };
+// defult active page 
+// activeNav("home");
 
 //  load home page
 const homePage = () => {
@@ -153,15 +169,16 @@ const productsPage = () => {
 
   container.innerHTML = `
     <section>
-        <div class="md:w-10/12 max-w-7xl mx-auto py-12 px-6">
+        <div class="w-full md:w-10/12 max-w-7xl mx-auto py-12 px-4 sm:px-6">
             <h2 class="text-3xl font-bold mb-8 text-center">Our Products</h2>
-            <div id="product-container" class="grid md:grid-cols-3 gap-6">
+            <div id="category-container" class="flex flex-wrap gap-3 justify-center mb-8"></div>
+            <div id="product-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             </div>
         </div>
 
         <!-- Details Modal -->
         <dialog id="product_modal" class="modal">
-            <div class="modal-box max-w-lg">
+            <div class="modal-box w-11/12 max-w-lg">
                 <div id="details-container"></div>
 
                 <div class="modal-action">
@@ -175,6 +192,8 @@ const productsPage = () => {
   `;
 
   loadProductsPage(allProducts);
+  loadCategories();
+
 };
 
 //  load products page with all products
@@ -185,7 +204,7 @@ const loadProductsPage = (products) => {
   products.forEach((product) => {
     container.innerHTML += `
       <div class="card bg-base-100 shadow-md">
-        <figure class="bg-gray-100 p-8 h-72">
+        <figure class="bg-gray-100 p-6 h-64 sm:h-72 flex items-center justify-center">
         <img src="${product.image}" 
           class="h-52 object-contain">
       </figure>
@@ -219,7 +238,7 @@ const loadProductsPage = (products) => {
   });
 };
 
-// Display product cards
+// Display treding product cards
 const displayTrendingProducts = (products) => {
   const container = document.getElementById("product-container");
   container.innerHTML = "";
@@ -285,6 +304,76 @@ const displayProductDetails = (product) => {
   `;
   document.getElementById("product_modal").showModal();
 };
+
+// Display category buttons
+const displayCategories = () => {
+  const container = document.getElementById("category-container");
+
+  let buttons = `
+    <button data-cat="all"
+      onclick="filterCategory('all')"
+      class="cat-btn px-4 py-2 rounded-full bg-blue-600 text-white">
+      All
+    </button>
+  `;
+
+  categories.forEach(cat => {
+    buttons += `
+      <button data-cat="${cat}"
+        onclick="filterCategory('${cat}')"
+        class="cat-btn px-4 py-2 border rounded-full hover:bg-blue-600 hover:text-white transition">
+        ${cat}
+      </button>
+    `;
+  });
+
+  container.innerHTML = buttons;
+};
+
+// Active category button
+const activeCategory = (category) => {
+  const buttons = document.querySelectorAll(".cat-btn");
+
+  buttons.forEach(btn => {
+    btn.classList.remove("bg-blue-600", "text-white");
+    btn.classList.add("border", "border-gray-300");
+
+    if (btn.innerText.toLowerCase() === category.toLowerCase() ||
+        (category === "all" && btn.innerText === "All")) {
+      btn.classList.add("bg-blue-600", "text-white");
+      btn.classList.remove("border", "border-gray-300");
+    }
+  });
+};
+
+// Filter products by category
+const filterCategory = (category) => {
+ activeCategory(category);
+
+  if (category === "all") {
+    loadProductsPage(allProducts);
+    return;
+  }
+  fetch(`https://fakestoreapi.com/products/category/${category}`)
+    .then(res => res.json())
+    .then(data => {
+      loadProductsPage(data);
+    });
+};
+
+// active navbar link
+
+const activeNav = (page) => {
+  document.querySelectorAll(".active").forEach(link => {
+    link.classList.remove("text-blue-600", "font-semibold");
+    if (link.dataset.page === page) {
+      link.classList.add("text-blue-600", "font-semibold");
+    }
+  });
+};
+
+
+
 
 homePage();
 loadProducts();
