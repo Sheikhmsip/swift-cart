@@ -36,10 +36,10 @@
             </div>
             <div class="navbar-center hidden lg:flex">
                 <ul class="menu menu-horizontal px-1">
-                    <li><a>Home</a></li>
-                    <li><a href="">Products</a></li>
-                    <li><a>About</a></li>
-                    <li><a>Contact</a></li>
+                    <li class="cursor-pointer" onclick="navigate('home')"><a>Home</a></li>
+                    <li class="cursor-pointer" onclick="navigate('products')"><a>Products</a></li>
+                    <li class="cursor-pointer"><a>About</a></li>
+                    <li class="cursor-pointer"><a>Contact</a></li>
                 </ul>
             </div>
             <div class="navbar-end dropdown-end ">
@@ -56,10 +56,10 @@
                     </div>
                     <ul tabindex="-1"
                         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                        <li><a>Home</a></li>
-                        <li><a href="">Products</a></li>
-                        <li><a>About</a></li>
-                        <li><a>Contact</a></li>
+                        <li class="cursor-pointer" onclick="navigate('home')"><a>Home</a></li>
+                        <li class="cursor-pointer"onclick="navigate('products')"><a>Products</a></li>
+                        <li class="cursor-pointer"><a>About</a></li>
+                        <li class="cursor-pointer"><a>Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -67,7 +67,7 @@
     </header>
 
     <!-- Banner section -->
-    <section class="relative w-full overflow-hidden">
+    <!-- <section class="relative w-full overflow-hidden">
         <img src="./Assets/banner-image.png" class="absolute inset-0 w-full h-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-r from-[#0f172a]/90 via-[#0f172a]/70 to-transparent"></div>
         <div class="relative md:max-w-10/12 mx-auto px-6 md:px-8">
@@ -87,10 +87,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Why Choose us section -->
-    <section class="py-16 w-full md:w-10/12 mx-auto">
+    <!-- <section class="py-16 w-full md:w-10/12 mx-auto">
         <div class="max-w-6xl mx-auto px-4">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
@@ -147,31 +147,17 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
+
+<!-- Load page dynamically -->
+<main id="dynamicPage">
+
+</main>
 
     <!-- Trending Section products dynamicaly -->
 
-    <section>
-        <div class="md:w-10/12 max-w-7xl mx-auto py-12 px-6">
-            <h2 class="text-3xl font-bold mb-8">Trending Now</h2>
-            <div id="product-container" class="grid md:grid-cols-3 gap-6">
-            </div>
-        </div>
-
-        <!-- Details Modal -->
-        <dialog id="product_modal" class="modal">
-            <div class="modal-box max-w-lg">
-                <div id="details-container"></div>
-
-                <div class="modal-action">
-                    <form method="dialog">
-                        <button class="btn">Close</button>
-                    </form>
-                </div>
-            </div>
-        </dialog>
-    </section>
+   
 
     <!-- footer section -->
     <footer class="bg-slate-800 text-gray-300">
