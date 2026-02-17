@@ -1,3 +1,8 @@
+// Loading Spinner
+const manageSpinner = (status) => {
+  const spinner = document.getElementById("spinner");
+  status ? spinner.classList.remove("hidden") : spinner.classList.add("hidden");
+};
 
 // gloval variables to store products and categories
 let allProducts = [];
@@ -6,6 +11,9 @@ let categories = [];
 
 // load all products
 const loadProducts = () => {
+
+  manageSpinner(true);
+
   fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
     .then((data) => {
@@ -16,25 +24,35 @@ const loadProducts = () => {
       // console.log(products);
       // console.log(trendingproducts)
       displayTrendingProducts(trendingProducts);
-    });
+      manageSpinner(false);
+    })
+    
 };
 
 // load single product details
 const loadProductDetails = (id) => {
+
+  manageSpinner(true);
+
   fetch(`https://fakestoreapi.com/products/${id}`)
     .then((res) => res.json())
     .then((product) => {
       displayProductDetails(product);
+      manageSpinner(false);
     });
 };
 
 // load categories
 const loadCategories = () => {
+
+  manageSpinner(true);
+
   fetch("https://fakestoreapi.com/products/categories")
     .then(res => res.json())
     .then(data => {
       categories = data;
       displayCategories(categories);
+      manageSpinner(false);
     });
 };
 
@@ -43,11 +61,11 @@ const loadCategories = () => {
 //  dynamically page navigation
 const navigate = (page) => {
   activeNav(page);
+  manageSpinner(true);
   if (page === "home") homePage();
   if (page === "products") productsPage();
 };
-// defult active page 
-// activeNav("home");
+
 
 //  load home page
 const homePage = () => {
@@ -190,9 +208,10 @@ const productsPage = () => {
         </dialog>
     </section>
   `;
-
+  manageSpinner(true);
   loadProductsPage(allProducts);
   loadCategories();
+ 
 
 };
 
@@ -236,6 +255,7 @@ const loadProductsPage = (products) => {
       </div>
     `;
   });
+  manageSpinner(false);
 };
 
 // Display treding product cards
@@ -277,7 +297,9 @@ const displayTrendingProducts = (products) => {
       </div>
     `;
     container.appendChild(card);
+    
   });
+  manageSpinner(false);
 };
 
 // Display details modal
@@ -326,7 +348,7 @@ const displayCategories = () => {
       </button>
     `;
   });
-
+manageSpinner(false);
   container.innerHTML = buttons;
 };
 
@@ -349,7 +371,7 @@ const activeCategory = (category) => {
 // Filter products by category
 const filterCategory = (category) => {
  activeCategory(category);
-
+manageSpinner(true);
   if (category === "all") {
     loadProductsPage(allProducts);
     return;
@@ -358,6 +380,7 @@ const filterCategory = (category) => {
     .then(res => res.json())
     .then(data => {
       loadProductsPage(data);
+      manageSpinner(false);
     });
 };
 
@@ -374,6 +397,7 @@ const activeNav = (page) => {
 
 
 
-
+// defult active page 
+navigate("home");
 homePage();
 loadProducts();
