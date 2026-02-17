@@ -306,7 +306,7 @@ const displayTrendingProducts = (products) => {
 const displayProductDetails = (product) => {
   const detailsBox = document.getElementById("details-container");
   detailsBox.innerHTML = `
-      <div class="text-center">
+      <div class="text-center space-y-2">
         <img src="${product.image}" 
           class="h-44 mx-auto object-contain mb-4">
         <h2 class="font-bold text-xl mb-2">
@@ -315,13 +315,14 @@ const displayProductDetails = (product) => {
         <p class="text-sm text-gray-600 mb-4">
           ${product.description}
         </p>
-        <div class="flex justify-between text-sm font-semibold">
-          <span>$${product.price}</span>
-          <span>
+        <div class="flex justify-between font-bold text-xl">
+          <span class="text-red-500 ">$${product.price}</span>
+          <span class="text-blue-600">
             <i class="fa-solid fa-star text-yellow-400"></i>
             ${product.rating.rate}
           </span>
         </div>
+        <button class="btn btn-primary w-full">Buy Now</button>
       </div>
   `;
   document.getElementById("product_modal").showModal();
